@@ -2,7 +2,7 @@ package com.app.android_clean_architecture_assignment.domain.meal.entity
 
 import com.google.gson.annotations.SerializedName
 
-class Meal {
+class MealEntity {
 
     @SerializedName("strCategory")
     lateinit var name: String

@@ -6,14 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.app.android_clean_architecture_assignment.R
 import com.app.android_clean_architecture_assignment.common.inflate
-import com.app.android_clean_architecture_assignment.domain.meal.entity.Meal
+import com.app.android_clean_architecture_assignment.presentation.model.MealModel
 import kotlinx.android.synthetic.main.row_meal.view.*
 
-class MealAdapter : RecyclerView.Adapter<MealAdapter.RecyclerViewHolder>() {
+class MealAdapter(private val onItemClicked: (meal: MealModel) -> Unit) :
+    RecyclerView.Adapter<MealAdapter.RecyclerViewHolder>() {
 
-    private var arrayList = ArrayList<Meal>()
+    private var arrayList = ArrayList<MealModel>()
 
-    fun setItems(results: ArrayList<Meal>) {
+    fun setItems(results: ArrayList<MealModel>) {
         arrayList.clear()
         arrayList.addAll(results)
         notifyDataSetChanged()
@@ -29,12 +30,16 @@ class MealAdapter : RecyclerView.Adapter<MealAdapter.RecyclerViewHolder>() {
         holder.bind(arrayList[position])
     }
 
-    inner class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(meal: Meal) {
-            itemView.tvMeal.text = meal.name
-            Glide.with(itemView.context)
-                .load(meal.mealUrl)
-                .into(itemView.ivMeal)
+    inner class RecyclerViewHolder(itemView: View) :
+
+        RecyclerView.ViewHolder(itemView) {
+        fun bind(meal: MealModel) {
+
+            meal.apply {
+                itemView.tvMeal.text = name
+                Glide.with(itemView.context).load(mealUrl).into(itemView.ivMeal)
+            }
+            itemView.setOnClickListener { onItemClicked(arrayList[adapterPosition]) }
         }
     }
 }

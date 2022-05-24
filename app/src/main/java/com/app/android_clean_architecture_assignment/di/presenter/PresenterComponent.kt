@@ -5,6 +5,7 @@ import com.app.android_clean_architecture_assignment.di.viewmodel.ViewModelFacto
 import com.app.android_clean_architecture_assignment.di.viewmodel.ViewModelModule
 import com.app.android_clean_architecture_assignment.presentation.main.MainActivity
 import com.app.android_clean_architecture_assignment.presentation.meal.MealFragment
+import com.app.android_clean_architecture_assignment.presentation.mealDetail.MealDetailFragment
 import dagger.Component
 
 @Component(
@@ -16,4 +17,5 @@ interface PresenterComponent {
     //injectDagger activity / fragment on here
     fun inject(presenter: MainActivity)
     fun inject(presenter: MealFragment)
+    fun inject(presenter: MealDetailFragment)
 }

@@ -7,7 +7,7 @@ object Release {
     const val versionName = "1.0"
     const val compileSdkVersion = 28
     const val targetSdkVersion = 28
-    const val minSdkVersion = 21
+    const val minSdkVersion = 26
 }
 
 object Config {

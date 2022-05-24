@@ -9,5 +9,20 @@
         android:id="@+id/mealFragment"
         android:name="com.app.android_clean_architecture_assignment.presentation.meal.MealFragment"
         android:label="DashboardFragment"
-        tools:layout="@layout/fragment_meal" />
+        tools:layout="@layout/fragment_meal">
+        <action
+            android:id="@+id/action_mealFragment_to_mealDetailFragment"
+            app:destination="@id/mealDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mealDetailFragment"
+        android:name="com.app.android_clean_architecture_assignment.presentation.mealDetail.MealDetailFragment"
+        android:label="fragment_meal_detail"
+        tools:layout="@layout/fragment_meal_detail">
+
+        <argument
+            android:name="meal"
+            app:argType="string" />
+    </fragment>
 </navigation>
