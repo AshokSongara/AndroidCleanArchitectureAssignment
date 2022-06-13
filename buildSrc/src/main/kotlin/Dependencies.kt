@@ -5,13 +5,13 @@ object ApplicationId {
 object Release {
     const val versionCode = 1
     const val versionName = "1.0"
-    const val compileSdkVersion = 28
-    const val targetSdkVersion = 28
+    const val compileSdkVersion = 29
+    const val targetSdkVersion = 30
     const val minSdkVersion = 26
 }
 
 object Config {
-    const val gradle = "com.android.tools.build:gradle:3.4.2"
+    const val gradle = "com.android.tools.build:gradle:4.2.2"
     const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlinVersion}"
     const val navigationGradle =
         "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.navigationVersion}"
@@ -19,7 +19,7 @@ object Config {
 
 object Version {
     // Kotlin based
-    const val kotlinVersion = "1.3.41"
+    const val kotlinVersion = "1.6.10"
     const val kotlinCoreVersion = "1.0.2"
 
     //RxJava & RxAndroid
@@ -72,6 +72,7 @@ object Version {
     //ui test
 
     const val espressoVersion = "3.5.0-alpha06"
+    const val espressoRuleVersion = "1.4.0"
 }
 
 object Dependencies {
@@ -154,4 +155,6 @@ object CircularImageView {
 object UiTestCase {
     const val espressoCore = "androidx.test.espresso:espresso-core:${Version.espressoVersion}"
     const val espressocontrib = "androidx.test.espresso:espresso-contrib:${Version.espressoVersion}"
+    const val espressorunner = "androidx.test:runner:${Version.espressoRuleVersion}"
+    const val espressorules = "androidx.test:rules:${Version.espressoRuleVersion}"
 }

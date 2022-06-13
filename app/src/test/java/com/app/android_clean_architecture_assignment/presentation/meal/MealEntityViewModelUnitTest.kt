@@ -7,11 +7,12 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.whenever
 import com.app.android_clean_architecture_assignment.data.meal.entity.MealApiResponse
-import com.app.android_clean_architecture_assignment.domain.meal.entity.MealEntity
+import com.app.android_clean_architecture_assignment.domain.meal.entity.transformMealDisplayList
 import com.app.android_clean_architecture_assignment.domain.meal.usecase.MealUseCase
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.RxImmediateSchedulerRule
 import com.app.android_clean_architecture_assignment.presentation.common.Status
+import com.app.android_clean_architecture_assignment.presentation.model.MealModel
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import org.hamcrest.CoreMatchers
@@ -28,11 +29,11 @@ import org.mockito.junit.MockitoJUnit
 
 class MealEntityViewModelUnitTest {
     //output value
-    private val successLoginResponse: Resource<ArrayList<MealEntity>> =
-        Resource(Status.SUCCESS, mealResponse().data)
+    private val successLoginResponse: Resource<ArrayList<MealModel>> =
+        Resource(Status.SUCCESS, mealResponse().data.transformMealDisplayList())
     private val errorLoginResponse: Resource<Throwable> =
         Resource(Status.ERROR, throwable = Exception())
-    private val loadingLoginResponse: Resource<ArrayList<MealEntity>> = Resource(Status.LOADING)
+    private val loadingLoginResponse: Resource<ArrayList<MealModel>> = Resource(Status.LOADING)
 
     @get:Rule
     val mockitoRule = MockitoJUnit.rule()
@@ -47,10 +48,10 @@ class MealEntityViewModelUnitTest {
     //mock dependencies
     private val mealUseCase = mock<MealUseCase>()
     private val mealViewModel by lazy { MealViewModel(mealUseCase) }
-    private var mealObserver = mock<Observer<Resource<ArrayList<MealEntity>>>>()
+    private var mealObserver = mock<Observer<Resource<ArrayList<MealModel>>>>()
 
     @Captor
-    var argumentCaptor: ArgumentCaptor<Resource<ArrayList<MealEntity>>>? = null
+    var argumentCaptor: ArgumentCaptor<Resource<ArrayList<MealModel>>>? = null
 
     @Before
     fun setUp() {
@@ -60,7 +61,7 @@ class MealEntityViewModelUnitTest {
 
     @Test
     fun fetchMeals_success() {
-        val delayer = PublishSubject.create<Resource<ArrayList<MealEntity>>>()
+        val delayer = PublishSubject.create<Resource<ArrayList<MealModel>>>()
 
         stub_fetchMeals_success(delayer)
 
@@ -104,7 +105,7 @@ class MealEntityViewModelUnitTest {
 
     //----------------------------stubbing-------------------------------------//
 
-    private fun stub_fetchMeals_success(delayer: PublishSubject<Resource<ArrayList<MealEntity>>>) {
+    private fun stub_fetchMeals_success(delayer: PublishSubject<Resource<ArrayList<MealModel>>>) {
         whenever(
             mealUseCase.execute()
         ).thenReturn(

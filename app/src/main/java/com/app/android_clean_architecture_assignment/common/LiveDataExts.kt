@@ -1,4 +1,4 @@
-package com.app.android_clean_architecture_assignment.common.extensions
+package com.app.android_clean_architecture_assignment.common
 
 import androidx.lifecycle.MutableLiveData
 import com.app.android_clean_architecture_assignment.presentation.common.Resource

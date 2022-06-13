@@ -1,8 +1,8 @@
 package com.app.android_clean_architecture_assignment.presentation.meal
 
-import com.app.android_clean_architecture_assignment.common.extensions.setError
-import com.app.android_clean_architecture_assignment.common.extensions.setLoading
-import com.app.android_clean_architecture_assignment.common.extensions.setSuccess
+import com.app.android_clean_architecture_assignment.common.setError
+import com.app.android_clean_architecture_assignment.common.setLoading
+import com.app.android_clean_architecture_assignment.common.setSuccess
 import com.app.android_clean_architecture_assignment.domain.meal.usecase.MealUseCase
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.base.BaseViewModel

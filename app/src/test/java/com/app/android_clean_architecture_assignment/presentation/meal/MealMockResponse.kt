@@ -1,6 +1,8 @@
 package com.app.android_clean_architecture_assignment.presentation.meal
 
 import com.app.android_clean_architecture_assignment.data.meal.entity.MealApiResponse
+import com.app.android_clean_architecture_assignment.presentation.mapper.MealDisplayMapper
+import com.app.android_clean_architecture_assignment.presentation.model.MealModel
 import com.google.gson.Gson
 
 const val MEAL_JSON = " {\n" +
@@ -28,6 +30,8 @@ const val MEAL_JSON = " {\n" +
         " }"
 
 val gson = Gson()
+
+var mealList: ArrayList<MealModel> = ArrayList()
 
 fun mealResponse(): MealApiResponse =
     gson.fromJson<MealApiResponse>(MEAL_JSON, MealApiResponse::class.java)
