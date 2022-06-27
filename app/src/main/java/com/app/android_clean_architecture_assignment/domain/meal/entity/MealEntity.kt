@@ -11,14 +11,6 @@ class MealEntity {
     @SerializedName("strCategoryThumb")
     lateinit var mealUrl: String
 }
-
-fun MealEntity.transformMealDisplay(): MealModel {
-    return MealModel(
-        name,
-        mealUrl
-    )
-}
-
 fun ArrayList<MealEntity>.transformMealDisplayList(): ArrayList<MealModel> {
     val mealList = ArrayList<MealModel>()
     this.forEach {

@@ -10,6 +10,8 @@ buildscript {
         classpath Config.gradle
         classpath Config.kotlinGradle
         classpath Config.navigationGradle
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.0'
+        classpath "org.jacoco:org.jacoco.core:0.8.5"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
