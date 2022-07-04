@@ -69,6 +69,19 @@ object Version {
 
     const val espressoVersion = "3.5.0-alpha06"
     const val espressoRuleVersion = "1.4.0"
+
+    //hilt
+    const val hiltVersion = "2.37"
+    const val hiltViewmodels = "1.0.0-alpha02"
+
+    //room
+    const val room = "2.2.5"
+
+    //coroutine
+    const val coroutine = "1.5.2"
+
+    //firebase nom
+    const val firebaseBom = " 30.1.0"
 }
 
 object Dependencies {
@@ -122,11 +135,6 @@ object Reactivex {
     const val kotlin = "io.reactivex.rxjava2:rxkotlin:${Version.rxkotlinVersion}"
 }
 
-object Dagger {
-    const val dagger = "com.google.dagger:dagger:${Version.daggerVersion}"
-    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Version.daggerVersion}"
-}
-
 object TestLibs {
     const val junit = "junit:junit:${Version.junitVersion}"
     const val testRunner = "androidx.test:runner:${Version.testRunnerVersion}"
@@ -148,4 +156,28 @@ object UiTestCase {
     const val espressocontrib = "androidx.test.espresso:espresso-contrib:${Version.espressoVersion}"
     const val espressorunner = "androidx.test:runner:${Version.espressoRuleVersion}"
     const val espressorules = "androidx.test:rules:${Version.espressoRuleVersion}"
+}
+
+object Hilt{
+    const val hilt = "com.google.dagger:hilt-android:${Version.hiltVersion}"
+    const val hiltCompiler =  "com.google.dagger:hilt-android-compiler:${Version.hiltVersion}"
+
+    const val hiltViewModel =   "androidx.hilt:hilt-lifecycle-viewmodel:${Version.hiltViewmodels}"
+    const val hiltViewModelCompiler =   "androidx.hilt:hilt-compiler:${Version.hiltViewmodels}"
+}
+
+object Room{
+    const val room = "androidx.room:room-ktx:${Version.room}"
+    const val roomCompiler = "androidx.room:room-compiler:${Version.room}"
+}
+
+object Coroutine{
+    const val coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutine}"
+    const val coroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutine}"
+}
+
+object Firebase{
+    const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
+    const val analytics = "com.google.firebase:firebase-analytics-ktx"
+    const val firebaseBom = "com.google.firebase:firebase-bom:${Version.firebaseBom}"
 }

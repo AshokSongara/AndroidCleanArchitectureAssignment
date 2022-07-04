@@ -32,13 +32,13 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
     def mainSrc = "$project.projectDir/src/main/java"
 
     @SuppressWarnings("GroovyAccessiblity")
-    sourceDirectories = files([mainSrc])
+            sourceDirectories = files([mainSrc])
     @SuppressWarnings("GroovyAccessiblity")
-    classDirectories = files([debugTree])
+            classDirectories = files([debugTree])
     @SuppressWarnings("GroovyAccessiblity")
-    executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'
-    ])
+            executionData = fileTree(dir: project.buildDir, includes: [
+                    'jacoco/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'
+            ])
 }
 
 android {
@@ -58,7 +58,7 @@ android {
         jvmTarget = "1.8"
     }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
     }
 
@@ -141,26 +141,23 @@ dependencies {
     api Json.gson
 
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:30.1.0')
+    implementation platform(Firebase.firebaseBom)
 
     // Declare the dependencies for the Crashlytics and Analytics libraries
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation Firebase.crashlytics
+    implementation Firebase.analytics
 
     // database
-    implementation 'androidx.room:room-ktx:2.2.5'
-    kapt 'androidx.room:room-compiler:2.2.5'
+    implementation Room.room
+    kapt Room.roomCompiler
 
     // coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+    implementation Coroutine.coroutineAndroid
+    implementation Coroutine.coroutineCore
 
-    def hilt_version = "2.37"
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation Hilt.hilt
+    kapt Hilt.hiltCompiler
 
-    def hilt_viewmodels = "1.0.0-alpha02"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
-    kapt "androidx.hilt:hilt-compiler:$hilt_viewmodels"
+    implementation Hilt.hiltViewModel
+    kapt Hilt.hiltViewModelCompiler
 }
