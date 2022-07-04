@@ -4,15 +4,17 @@ import com.app.android_clean_architecture_assignment.common.setError
 import com.app.android_clean_architecture_assignment.common.setLoading
 import com.app.android_clean_architecture_assignment.common.setSuccess
 import com.app.android_clean_architecture_assignment.domain.meal.usecase.MealUseCase
+import com.app.android_clean_architecture_assignment.domain.model.MealModel
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.base.BaseViewModel
 import com.app.android_clean_architecture_assignment.presentation.common.base.SingleLiveEvent
 import com.app.android_clean_architecture_assignment.presentation.mapper.MealDisplayMapper
-import com.app.android_clean_architecture_assignment.presentation.model.MealModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class MealViewModel @Inject constructor(
-    private var mealUseCase: MealUseCase
+    private var mealUseCase: MealUseCase,
 ) : BaseViewModel() {
 
     private val _mealLiveEvent = SingleLiveEvent<Resource<ArrayList<MealModel>>>()
@@ -37,4 +39,19 @@ class MealViewModel @Inject constructor(
                 _mealLiveEvent.setError(it)
             }).collect()
     }
+
+    fun insertMealItem(MealModel: MealModel) {
+//        viewModelScope.launch {
+//            mealDetailsDataSource.insert(
+//                MealDto(
+//                    MealModel.id,
+//                    MealModel.name,
+//                    MealModel.mealUrl,
+//                    MealModel.mealDescription
+//                )
+//            )
+//        }
+    }
+
+    fun navigateToDetails(){}
 }

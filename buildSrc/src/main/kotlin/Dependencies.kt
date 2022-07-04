@@ -25,7 +25,6 @@ object Version {
     //RxJava & RxAndroid
     const val rxkotlinVersion = "2.2.0"
     const val rxandroidVersion = "2.1.0"
-    const val rxbindingVersion = "2.1.1"
 
     //json
     const val gsonVersion = "2.8.5"
@@ -57,9 +56,6 @@ object Version {
 
     //multidex
     const val multidexVersion = "2.0.1"
-
-    //circular imageview
-    const val circularImageViewVersion = "3.0.0"
 
     //unit test
     const val mockitoVersion = "2.21.0"
@@ -124,7 +120,6 @@ object Json {
 object Reactivex {
     const val android = "io.reactivex.rxjava2:rxandroid:${Version.rxandroidVersion}"
     const val kotlin = "io.reactivex.rxjava2:rxkotlin:${Version.rxkotlinVersion}"
-    const val rxBinding = "com.jakewharton.rxbinding2:rxbinding:${Version.rxbindingVersion}"
 }
 
 object Dagger {
@@ -146,10 +141,6 @@ object UnitTest {
     const val daggerMock =
         "com.github.fabioCollini.daggermock:daggermock-kotlin:${Version.daggerMockVersion}"
     const val kotlinTest = "io.kotlintest:kotlintest-runner-junit5:${Version.kotlinTestVersion}"
-}
-
-object CircularImageView {
-    const val circularImageView = "de.hdodenhof:circleimageview:${Version.circularImageViewVersion}"
 }
 
 object UiTestCase {

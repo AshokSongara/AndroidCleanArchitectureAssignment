@@ -1,7 +1,6 @@
-package com.app.android_clean_architecture_assignment.data.meal.entity
+package com.app.android_clean_architecture_assignment.data.remote.entity
 
 import com.google.gson.annotations.SerializedName
-import com.app.android_clean_architecture_assignment.domain.meal.entity.MealEntity
 
 class MealApiResponse {
     @SerializedName("categories")

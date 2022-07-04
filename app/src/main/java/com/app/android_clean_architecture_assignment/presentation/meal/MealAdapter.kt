@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.app.android_clean_architecture_assignment.R
 import com.app.android_clean_architecture_assignment.common.inflate
-import com.app.android_clean_architecture_assignment.presentation.model.MealModel
+import com.app.android_clean_architecture_assignment.domain.model.MealModel
 import kotlinx.android.synthetic.main.row_meal.view.*
 
 class MealAdapter(private val onItemClicked: (meal: MealModel) -> Unit) :

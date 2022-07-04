@@ -1,11 +1,14 @@
-package com.app.android_clean_architecture_assignment.di.app
+package com.app.android_clean_architecture_assignment.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 @Module
+@InstallIn(SingletonComponent::class)
 class CommonModule {
 
     @Provides

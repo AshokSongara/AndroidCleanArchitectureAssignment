@@ -2,17 +2,17 @@ package com.app.android_clean_architecture_assignment.presentation.meal
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.app.android_clean_architecture_assignment.data.remote.entity.MealApiResponse
+import com.app.android_clean_architecture_assignment.data.remote.entity.transformMealDisplayList
+import com.app.android_clean_architecture_assignment.domain.meal.usecase.MealUseCase
+import com.app.android_clean_architecture_assignment.domain.model.MealModel
+import com.app.android_clean_architecture_assignment.presentation.common.Resource
+import com.app.android_clean_architecture_assignment.presentation.common.RxImmediateSchedulerRule
+import com.app.android_clean_architecture_assignment.presentation.common.Status
 import com.google.gson.Gson
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.whenever
-import com.app.android_clean_architecture_assignment.data.meal.entity.MealApiResponse
-import com.app.android_clean_architecture_assignment.domain.meal.entity.transformMealDisplayList
-import com.app.android_clean_architecture_assignment.domain.meal.usecase.MealUseCase
-import com.app.android_clean_architecture_assignment.presentation.common.Resource
-import com.app.android_clean_architecture_assignment.presentation.common.RxImmediateSchedulerRule
-import com.app.android_clean_architecture_assignment.presentation.common.Status
-import com.app.android_clean_architecture_assignment.presentation.model.MealModel
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import org.hamcrest.CoreMatchers

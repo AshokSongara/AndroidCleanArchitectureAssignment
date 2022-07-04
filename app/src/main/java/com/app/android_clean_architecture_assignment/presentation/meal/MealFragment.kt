@@ -2,14 +2,14 @@ package com.app.android_clean_architecture_assignment.presentation.meal
 
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.app.android_clean_architecture_assignment.R
+import com.app.android_clean_architecture_assignment.common.initViewModel
+import com.app.android_clean_architecture_assignment.common.safeObserve
+import com.app.android_clean_architecture_assignment.domain.model.MealModel
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.Status
 import com.app.android_clean_architecture_assignment.presentation.common.base.BaseViewModelFragment
-import com.app.android_clean_architecture_assignment.presentation.common.base.SafeObserver
-import com.app.android_clean_architecture_assignment.presentation.model.MealModel
 import kotlinx.android.synthetic.main.fragment_meal.*
 
 class MealFragment : BaseViewModelFragment<MealViewModel>() {
@@ -18,28 +18,22 @@ class MealFragment : BaseViewModelFragment<MealViewModel>() {
 
     override fun getContentResource() = R.layout.fragment_meal
 
-    override fun injectDagger() {
-        initPresenterComponent()?.inject(this)
-    }
-
-    override fun buildViewModel(): MealViewModel {
-        return ViewModelProviders.of(this, viewModelFactory)[MealViewModel::class.java]
-    }
-
-    override fun initLiveDataObservers() {
-        super.initLiveDataObservers()
-        viewModel.mealLiveEvent.observe(
-            viewLifecycleOwner,
-            SafeObserver(this::handleMealResponse)
-        )
-    }
+    override fun buildViewModel() = initViewModel<MealViewModel>()
 
     override fun initViews() {
         super.initViews()
         rvMeal.adapter = mealAdapter
     }
 
+    override fun initLiveDataObservers() {
+        super.initLiveDataObservers()
+        viewModel.mealLiveEvent.safeObserve(
+            this, this::handleMealResponse
+        )
+    }
+
     private fun onItemClicked(mealModel: MealModel) {
+        //  mealViewModel.insertMealItem(mealModel)
         val bundle = bundleOf("meal" to mealModel.mealUrl)
         findNavController().navigate(R.id.action_mealFragment_to_mealDetailFragment, bundle)
     }
@@ -66,4 +60,6 @@ class MealFragment : BaseViewModelFragment<MealViewModel>() {
             Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
         }
     }
+
+
 }

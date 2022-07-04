@@ -1,6 +1,6 @@
 package com.app.android_clean_architecture_assignment.domain.meal.usecase
 
-import com.app.android_clean_architecture_assignment.data.meal.entity.MealApiResponse
+import com.app.android_clean_architecture_assignment.data.remote.entity.MealApiResponse
 import com.app.android_clean_architecture_assignment.domain.meal.repository.MealRepository
 import com.app.android_clean_architecture_assignment.domain.common.ErrorTransformer
 import com.app.android_clean_architecture_assignment.domain.common.base.BaseUseCase

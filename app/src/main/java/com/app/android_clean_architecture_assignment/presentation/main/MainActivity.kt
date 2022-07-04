@@ -1,17 +1,19 @@
 package com.app.android_clean_architecture_assignment.presentation.main
 
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.app.android_clean_architecture_assignment.R
-import com.app.android_clean_architecture_assignment.presentation.common.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : BaseActivity() {
-    protected val navController by lazy {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+    private val navController by lazy {
         findNavController(R.id.navHostFragment)
     }
 
-    override fun getContentResource() = R.layout.activity_main
-
-    override fun injectDagger() {
-        initScreenComponent()?.inject(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
     }
 }
