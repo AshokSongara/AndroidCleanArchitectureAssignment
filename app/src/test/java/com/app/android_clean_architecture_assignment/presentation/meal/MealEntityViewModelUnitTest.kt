@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.app.android_clean_architecture_assignment.data.remote.entity.MealApiResponse
 import com.app.android_clean_architecture_assignment.data.remote.entity.transformMealDisplayList
+import com.app.android_clean_architecture_assignment.domain.meal.usecase.FetchDataUseCase
 import com.app.android_clean_architecture_assignment.domain.meal.usecase.MealUseCase
 import com.app.android_clean_architecture_assignment.domain.model.MealModel
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
@@ -47,7 +48,8 @@ class MealEntityViewModelUnitTest {
 
     //mock dependencies
     private val mealUseCase = mock<MealUseCase>()
-    private val mealViewModel by lazy { MealViewModel(mealUseCase) }
+    private val fetchUseCase = mock<FetchDataUseCase>()
+    private val mealViewModel by lazy { MealViewModel(mealUseCase,fetchUseCase) }
     private var mealObserver = mock<Observer<Resource<ArrayList<MealModel>>>>()
 
     @Captor
