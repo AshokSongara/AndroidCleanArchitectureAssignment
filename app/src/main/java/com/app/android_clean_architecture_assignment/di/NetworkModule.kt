@@ -1,6 +1,7 @@
 package com.app.android_clean_architecture_assignment.di
 
 import com.app.android_clean_architecture_assignment.BuildConfig
+import com.app.android_clean_architecture_assignment.common.AppConstants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +23,7 @@ class NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://www.themealdb.com/api/json/v1/1/")
+            .baseUrl(AppConstants.BASE_URL)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()

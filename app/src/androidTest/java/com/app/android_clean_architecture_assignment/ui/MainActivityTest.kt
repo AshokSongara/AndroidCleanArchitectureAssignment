@@ -13,7 +13,7 @@ class MainActivityTest(contentLayoutId: Int) : AppCompatActivity(contentLayoutId
 
     fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.mealFragment, fragment, "TEST")
+            .add(R.id.characterFragment, fragment, "TEST")
             .commit()
     }
 

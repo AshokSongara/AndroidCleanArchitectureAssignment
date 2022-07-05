@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.app.android_clean_architecture_assignment.common.AppConstants
 import com.app.android_clean_architecture_assignment.data.local.AppDatabase
-import com.app.android_clean_architecture_assignment.data.local.dao.MealDao
+import com.app.android_clean_architecture_assignment.data.local.dao.CharacterDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +26,7 @@ class RoomModule {
 
     @Singleton
     @Provides
-    fun providePostsDao(appDatabase: AppDatabase): MealDao {
-        return appDatabase.mealDao()
+    fun providePostsDao(appDatabase: AppDatabase): CharacterDao {
+        return appDatabase.characterDao()
     }
 }

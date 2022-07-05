@@ -1,12 +1,12 @@
 package com.app.android_clean_architecture_assignment.presentation.common.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
+import com.app.android_clean_architecture_assignment.R
 
 abstract class BaseFragment : Fragment(), LifecycleObserver {
 
@@ -28,7 +28,5 @@ abstract class BaseFragment : Fragment(), LifecycleObserver {
     }
 
     @CallSuper
-    protected open fun initViews() {
-    }
-
+    protected open fun initViews() {}
 }

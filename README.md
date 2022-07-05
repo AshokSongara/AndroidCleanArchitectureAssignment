@@ -1,6 +1,6 @@
-# Hotel Menu App
+# Disney Character App
 
-App to display list of Menu items of Hotel.
+App to display list of all Disney characters with Searching Functionality
 
 # Architecture Design
 

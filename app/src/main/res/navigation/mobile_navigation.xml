@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/mealFragment">
+    app:startDestination="@id/characterFragment">
 
     <fragment
-        android:id="@+id/mealFragment"
-        android:name="com.app.android_clean_architecture_assignment.presentation.meal.MealFragment"
+        android:id="@+id/characterFragment"
+        android:name="com.app.android_clean_architecture_assignment.presentation.character.CharacterFragment"
         android:label="DashboardFragment"
-        tools:layout="@layout/fragment_meal">
+        tools:layout="@layout/fragment_character">
         <action
-            android:id="@+id/action_mealFragment_to_mealDetailFragment"
-            app:destination="@id/mealDetailFragment" />
+            android:id="@+id/action_characterFragment_to_characterDetailFragment"
+            app:destination="@id/characterDetailFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/mealDetailFragment"
-        android:name="com.app.android_clean_architecture_assignment.presentation.mealDetail.MealDetailFragment"
-        android:label="fragment_meal_detail"
-        tools:layout="@layout/fragment_meal_detail">
+        android:id="@+id/characterDetailFragment"
+        android:name="com.app.android_clean_architecture_assignment.presentation.characterDetail.CharacterDetailFragment"
+        android:label="fragment_character_detail"
+        tools:layout="@layout/fragment_character_detail">
 
         <argument
-            android:name="meal"
-            app:argType="com.app.android_clean_architecture_assignment.domain.model.MealModel" />
+            android:name="character"
+            app:argType="com.app.android_clean_architecture_assignment.domain.model.CharacterModel" />
     </fragment>
 </navigation>
