@@ -7,14 +7,12 @@ App to display list of Menu items of Hotel.
 The Project is implemented by following Clean Architecture.
 
 - Separation of Concerns
-- SOLID principles.
 
 # Libraries Used
 
 - Using Retrofit library for fetching from the API
 - Using Dagger/Hilt for Dependency Injection
 - Using Room for the Local Persistence
-- Used MVVM  Binding Adapters for handling view and data
 - RXJava to perform API calls  
 - Coroutine to perform room database operations. 
 
