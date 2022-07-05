@@ -1,5 +1,6 @@
 package com.app.android_clean_architecture_assignment.presentation.mealDetail
 
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import com.app.android_clean_architecture_assignment.R
 import com.app.android_clean_architecture_assignment.common.initViewModel
@@ -33,6 +34,7 @@ class MealDetailFragment : BaseViewModelFragment<MealDetailsViewModel>() {
 
         btnAdd.setOnClickListener {
             viewModel.insertMealItem(args.meal)
+            Toast.makeText(context, "Successfully Saved Data", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -46,6 +46,7 @@ class MealViewModel @Inject constructor(
             }).collect()
     }
 
+    //fetch all data from local database if required
     fun getMealData() {
         viewModelScope.launch {
             fetchUseCase.invoke(

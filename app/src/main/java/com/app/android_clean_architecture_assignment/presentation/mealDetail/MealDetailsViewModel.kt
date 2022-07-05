@@ -12,12 +12,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MealDetailsViewModel @Inject constructor(
-    private var saveDBUsecase: SaveDBUsecase
+    private var saveDBUseCase: SaveDBUsecase
 ) : BaseViewModel() {
 
     fun insertMealItem(mealList: MealModel) {
         viewModelScope.launch {
-            saveDBUsecase.invoke(
+            saveDBUseCase.invoke(
                 scope = viewModelScope,
                 params = MealDisplayMapper().transformMealDomainToLocal(mealList)
             ) { result ->

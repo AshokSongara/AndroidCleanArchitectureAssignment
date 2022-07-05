@@ -29,9 +29,6 @@ object Version {
     //json
     const val gsonVersion = "2.8.5"
 
-    //Dagger
-    const val daggerVersion = "2.18"
-
     //image
     const val glideVersion = "4.9.0"
 
