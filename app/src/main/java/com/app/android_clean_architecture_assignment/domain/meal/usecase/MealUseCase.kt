@@ -15,4 +15,5 @@ class MealUseCase @Inject constructor(
     override fun buildSingle(data: Map<String, Any?>): Single<MealApiResponse> {
         return mealRepository.getMealData()
     }
+
 }

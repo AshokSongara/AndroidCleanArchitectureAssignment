@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 abstract class BaseFragment : Fragment(), LifecycleObserver {
 
     protected abstract fun getContentResource(): Int
+
+    protected abstract fun getClassName(): String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +28,7 @@ abstract class BaseFragment : Fragment(), LifecycleObserver {
     }
 
     @CallSuper
-    protected open fun initViews() {}
+    protected open fun initViews() {
+    }
 
 }

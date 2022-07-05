@@ -1,5 +1,6 @@
 package com.app.android_clean_architecture_assignment.di
 
+import com.app.android_clean_architecture_assignment.data.local.dao.MealDao
 import com.app.android_clean_architecture_assignment.data.remote.respository.MealApi
 import com.app.android_clean_architecture_assignment.data.remote.respository.MealRepositoryImpl
 import com.app.android_clean_architecture_assignment.domain.meal.repository.MealRepository
@@ -22,8 +23,8 @@ class MealModule {
 
     @Singleton
     @Provides
-    fun provideRepository(api: MealApi): MealRepository {
-        return MealRepositoryImpl(api)
+    fun provideRepository(api: MealApi,mealDao: MealDao): MealRepository {
+        return MealRepositoryImpl(api,mealDao)
     }
 
 

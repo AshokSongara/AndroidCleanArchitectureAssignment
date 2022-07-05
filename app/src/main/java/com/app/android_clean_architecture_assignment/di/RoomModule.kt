@@ -8,6 +8,7 @@ import com.app.android_clean_architecture_assignment.data.local.dao.MealDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -17,7 +18,7 @@ class RoomModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(context: Context): AppDatabase {
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, AppConstants.DB_NAME)
             .fallbackToDestructiveMigration()
             .build()

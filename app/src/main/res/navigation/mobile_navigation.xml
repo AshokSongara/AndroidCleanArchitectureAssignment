@@ -23,6 +23,6 @@
 
         <argument
             android:name="meal"
-            app:argType="string" />
+            app:argType="com.app.android_clean_architecture_assignment.domain.model.MealModel" />
     </fragment>
 </navigation>

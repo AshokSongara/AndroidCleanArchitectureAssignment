@@ -1,7 +1,6 @@
 package com.app.android_clean_architecture_assignment.presentation.meal
 
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.app.android_clean_architecture_assignment.R
 import com.app.android_clean_architecture_assignment.common.initViewModel
@@ -10,13 +9,19 @@ import com.app.android_clean_architecture_assignment.domain.model.MealModel
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.Status
 import com.app.android_clean_architecture_assignment.presentation.common.base.BaseViewModelFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_meal.*
 
+@AndroidEntryPoint
 class MealFragment : BaseViewModelFragment<MealViewModel>() {
 
     private val mealAdapter by lazy { MealAdapter(this::onItemClicked) }
 
     override fun getContentResource() = R.layout.fragment_meal
+
+    override fun getClassName(): String {
+        return this::class.java.simpleName
+    }
 
     override fun buildViewModel() = initViewModel<MealViewModel>()
 
@@ -33,9 +38,11 @@ class MealFragment : BaseViewModelFragment<MealViewModel>() {
     }
 
     private fun onItemClicked(mealModel: MealModel) {
-        //  mealViewModel.insertMealItem(mealModel)
-        val bundle = bundleOf("meal" to mealModel.mealUrl)
-        findNavController().navigate(R.id.action_mealFragment_to_mealDetailFragment, bundle)
+        // viewModel.getMealData()
+        //viewModel.insertMealItem(mealModel)
+
+        val action = MealFragmentDirections.actionMealFragmentToMealDetailFragment(mealModel)
+        findNavController().navigate(action)
     }
 
     private fun handleMealResponse(response: Resource<ArrayList<MealModel>>) {

@@ -141,7 +141,7 @@ dependencies {
     api Json.gson
 
     // Import the BoM for the Firebase platform
-    implementation platform(Firebase.firebaseBom)
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
 
     // Declare the dependencies for the Crashlytics and Analytics libraries
     implementation Firebase.crashlytics

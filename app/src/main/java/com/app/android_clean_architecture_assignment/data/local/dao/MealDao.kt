@@ -6,7 +6,7 @@ import com.app.android_clean_architecture_assignment.data.local.model.MealLocal
 @Dao
 interface MealDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMeals(meals: List<MealLocal>)
+    suspend fun insertMeals(meals: MealLocal)
 
     @Delete
     fun delete(meal: MealLocal)

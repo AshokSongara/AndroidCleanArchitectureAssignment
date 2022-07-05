@@ -7,5 +7,5 @@ import io.reactivex.Single
 interface MealRepository {
     fun getMealData(): Single<MealApiResponse>
     fun getLocalMealData(): List<MealLocal>
-    fun saveAllLocalData(meals : List<MealLocal>)
+    suspend fun saveAllLocalData(meals: MealLocal)
 }
