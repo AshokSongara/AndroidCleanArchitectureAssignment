@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.app.android_clean_architecture_assignment.data.remote.entity.CharacterApiResponse
 import com.app.android_clean_architecture_assignment.data.remote.entity.transformCharacterDisplayList
-import com.app.android_clean_architecture_assignment.domain.character.usecase.FetchLocalDataUseCase
 import com.app.android_clean_architecture_assignment.domain.character.usecase.CharacterUseCase
+import com.app.android_clean_architecture_assignment.domain.character.usecase.FetchLocalDataUseCase
 import com.app.android_clean_architecture_assignment.domain.model.CharacterModel
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.RxImmediateSchedulerRule
@@ -28,7 +28,7 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnit
 
-class CharacterEntityViewModelUnitTest {
+class CharacterViewModelUnitTest {
     //output value
     private val successCharacterResponse: Resource<ArrayList<CharacterModel>> =
         Resource(Status.SUCCESS, characterResponse().data.transformCharacterDisplayList())

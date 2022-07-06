@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 @LargeTest
-class RandomCharacterEntityFragmentTest {
+class RandomCharacterFragmentTest {
 
     /** the Activity of the Target application  */
     private var mActivity: MainActivity? = null
@@ -76,7 +76,7 @@ class RandomCharacterEntityFragmentTest {
                         RecyclerViewMatcher(resId)
                             .atPositionOnView(i, R.id.tvCharacter)
                     )
-                        .check(matches(withText("Beef")))
+                        .check(matches(withText(".GIFfany")))
                 }
             }
         }
@@ -93,7 +93,7 @@ class RandomCharacterEntityFragmentTest {
                 var resources: Resources? = null
                 var childView: View? = null
                 override fun describeTo(description: Description) {
-                    var idDescription = Integer.toString(recyclerViewId)
+                    var idDescription = recyclerViewId.toString()
                     if (resources != null) {
                         idDescription = try {
                             resources!!.getResourceName(recyclerViewId)

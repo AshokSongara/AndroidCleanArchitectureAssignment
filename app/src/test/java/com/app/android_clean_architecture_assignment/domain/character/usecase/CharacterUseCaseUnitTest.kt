@@ -37,9 +37,6 @@ class CharacterUseCaseUnitTest {
         CharacterUseCase(characterRepository, ErrorTransformer(gson))
     }
 
-    private val errorCharacterResponse: Resource<Throwable> =
-        Resource(Status.ERROR, throwable = Exception())
-
     // output
     private val characterApiResponse by lazy {
         CharacterApiResponse().apply {
