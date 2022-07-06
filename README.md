@@ -7,6 +7,7 @@ App to display list of all Disney characters with Searching Functionality
 The Project is implemented by following Clean Architecture.
 
 - Separation of Concerns
+- SOLID 
 
 # Libraries Used
 
