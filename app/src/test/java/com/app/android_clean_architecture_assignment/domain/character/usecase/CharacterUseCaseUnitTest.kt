@@ -5,8 +5,11 @@ import com.app.android_clean_architecture_assignment.data.common.exceptions.AppH
 import com.app.android_clean_architecture_assignment.data.remote.entity.CharacterApiResponse
 import com.app.android_clean_architecture_assignment.domain.common.ErrorTransformer
 import com.app.android_clean_architecture_assignment.domain.character.repository.CharacterRepository
+import com.app.android_clean_architecture_assignment.presentation.character.characterResponse
 import com.app.android_clean_architecture_assignment.presentation.character.gson
+import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.RxImmediateSchedulerRule
+import com.app.android_clean_architecture_assignment.presentation.common.Status
 import com.google.gson.Gson
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
@@ -29,20 +32,18 @@ class CharacterUseCaseUnitTest {
     val testSchedulerRule = RxImmediateSchedulerRule()
 
     private val characterRepository = mock<CharacterRepository>()
+
     private val characterUseCase by lazy {
         CharacterUseCase(characterRepository, ErrorTransformer(gson))
     }
 
+    private val errorCharacterResponse: Resource<Throwable> =
+        Resource(Status.ERROR, throwable = Exception())
+
     // output
     private val characterApiResponse by lazy {
         CharacterApiResponse().apply {
-            data = CharacterApiResponse().data
-        }
-    }
-
-    private val characterError by lazy {
-        CharacterApiResponse().apply {
-            data = CharacterApiResponse().data
+            data = characterResponse().data
         }
     }
 
@@ -62,19 +63,5 @@ class CharacterUseCaseUnitTest {
             }
             .assertComplete()
             .assertNoErrors()
-    }
-
-    @Test
-    fun testCharacterUseCase_error() {
-        val responseBody = mock<ResponseBody>()
-        whenever(responseBody.string()).thenReturn(Gson().toJson(characterError))
-        val response = Response.error<CharacterApiResponse>(401, responseBody)
-        val httpException = HttpException(response)
-        whenever(characterRepository.getCharacterData())
-            .thenReturn(Single.error(httpException))
-        characterUseCase.execute()
-            .test()
-            .assertSubscribed()
-            .assertFailure(AppHttpException.UnauthorizedException::class.java)
     }
 }

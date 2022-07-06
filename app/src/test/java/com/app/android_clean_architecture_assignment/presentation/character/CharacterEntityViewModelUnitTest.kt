@@ -30,11 +30,11 @@ import org.mockito.junit.MockitoJUnit
 
 class CharacterEntityViewModelUnitTest {
     //output value
-    private val successLoginResponse: Resource<ArrayList<CharacterModel>> =
+    private val successCharacterResponse: Resource<ArrayList<CharacterModel>> =
         Resource(Status.SUCCESS, characterResponse().data.transformCharacterDisplayList())
-    private val errorLoginResponse: Resource<Throwable> =
+    private val errorCharacterResponse: Resource<Throwable> =
         Resource(Status.ERROR, throwable = Exception())
-    private val loadingLoginResponse: Resource<ArrayList<CharacterModel>> = Resource(Status.LOADING)
+    private val loadingCharacterResponse: Resource<ArrayList<CharacterModel>> = Resource(Status.LOADING)
 
     @get:Rule
     val mockitoRule = MockitoJUnit.rule()
@@ -74,7 +74,7 @@ class CharacterEntityViewModelUnitTest {
             Mockito.verify(characterObserver).onChanged(capture())
             MatcherAssert.assertThat(
                 Gson().toJson(value),
-                CoreMatchers.`is`(Gson().toJson(loadingLoginResponse))
+                CoreMatchers.`is`(Gson().toJson(loadingCharacterResponse))
             )
         }
         delayer.onComplete()
@@ -83,7 +83,7 @@ class CharacterEntityViewModelUnitTest {
             Mockito.verify(characterObserver, Mockito.times(2)).onChanged(capture())
             MatcherAssert.assertThat(
                 Gson().toJson(value),
-                CoreMatchers.`is`(Gson().toJson(successLoginResponse))
+                CoreMatchers.`is`(Gson().toJson(successCharacterResponse))
             )
         }
     }
@@ -100,7 +100,7 @@ class CharacterEntityViewModelUnitTest {
 
             MatcherAssert.assertThat(
                 Gson().toJson(value),
-                CoreMatchers.`is`(Gson().toJson(errorLoginResponse))
+                CoreMatchers.`is`(Gson().toJson(errorCharacterResponse))
             )
         }
     }
