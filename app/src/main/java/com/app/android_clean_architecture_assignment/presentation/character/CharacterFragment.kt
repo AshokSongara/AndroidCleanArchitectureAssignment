@@ -5,19 +5,22 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.app.android_clean_architecture_assignment.R
 import com.app.android_clean_architecture_assignment.common.initViewModel
 import com.app.android_clean_architecture_assignment.common.safeObserve
+import com.app.android_clean_architecture_assignment.databinding.FragmentCharacterBinding
 import com.app.android_clean_architecture_assignment.domain.model.CharacterModel
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.Status
 import com.app.android_clean_architecture_assignment.presentation.common.base.BaseViewModelFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_character.*
 
 @AndroidEntryPoint
 class CharacterFragment : BaseViewModelFragment<CharacterViewModel>() {
+
+    private lateinit var binding: FragmentCharacterBinding
 
     private val characterAdapter by lazy { CharacterAdapter(this::onItemClicked) }
 
@@ -32,7 +35,9 @@ class CharacterFragment : BaseViewModelFragment<CharacterViewModel>() {
     override fun initViews() {
         super.initViews()
         setHasOptionsMenu(true)
-        rvCharacter.adapter = characterAdapter
+        binding =
+            DataBindingUtil.setContentView(requireActivity(), R.layout.fragment_character)
+        binding.rvCharacter.adapter = characterAdapter
     }
 
     override fun initLiveDataObservers() {
@@ -49,24 +54,24 @@ class CharacterFragment : BaseViewModelFragment<CharacterViewModel>() {
         findNavController().navigate(action)
     }
 
-    private fun handleCharacterResponse(response: Resource<ArrayList<CharacterModel>>) {
+    private fun handleCharacterResponse(response: Resource<MutableList<CharacterModel>>) {
         when (response.status) {
-            Status.LOADING -> progressBar.show()
+            Status.LOADING -> binding.progressBar.show()
             Status.ERROR -> handleError(response)
             Status.SUCCESS -> handleRandomSuccess(response.data)
         }
     }
 
-    private fun handleRandomSuccess(response: ArrayList<CharacterModel>?) {
-        progressBar.hide()
+    private fun handleRandomSuccess(response: MutableList<CharacterModel>?) {
+        binding.progressBar.hide()
         response?.let {
             // handle success here
-            characterAdapter.setItems(it)
+            characterAdapter.setData(it)
         }
     }
 
-    private fun handleError(response: Resource<ArrayList<CharacterModel>>) {
-        progressBar.hide()
+    private fun handleError(response: Resource<MutableList<CharacterModel>>) {
+        binding.progressBar.hide()
         characterAdapter.clear()
         response.throwable?.let {
             Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
@@ -75,8 +80,7 @@ class CharacterFragment : BaseViewModelFragment<CharacterViewModel>() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         // below line is to get our inflater
-        val inflater = activity?.menuInflater
-        inflater?.inflate(R.menu.menu_main, menu)
+        requireActivity().menuInflater.inflate(R.menu.menu_main, menu)
         val searchItem: MenuItem = menu.findItem(R.id.search)
         val searchView: SearchView = searchItem.actionView as SearchView
 
@@ -86,8 +90,8 @@ class CharacterFragment : BaseViewModelFragment<CharacterViewModel>() {
                 return false
             }
 
-            override fun onQueryTextChange(msg: String): Boolean {
-                viewModel.searchFilter(msg)
+            override fun onQueryTextChange(text: String): Boolean {
+                viewModel.searchCharacters(text)
                 return false
             }
         })

@@ -1,132 +1,131 @@
 package com.app.android_clean_architecture_assignment.ui
 
-import android.content.res.Resources
-import android.os.SystemClock
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.PerformException
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
+import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.filters.LargeTest
+import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.filters.MediumTest
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import androidx.test.rule.ActivityTestRule
 import com.app.android_clean_architecture_assignment.R
+import com.app.android_clean_architecture_assignment.presentation.character.CharacterAdapter
+import com.app.android_clean_architecture_assignment.presentation.common.ExpressoIdlingResource
 import com.app.android_clean_architecture_assignment.presentation.main.MainActivity
-import org.hamcrest.Description
+import dagger.hilt.android.testing.HiltAndroidTest
+import org.hamcrest.Matcher
+import org.hamcrest.core.AllOf.allOf
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.internal.matchers.TypeSafeMatcher
 import org.junit.runner.RunWith
 
-
+@MediumTest
+@HiltAndroidTest
 @RunWith(AndroidJUnit4ClassRunner::class)
-@LargeTest
 class RandomCharacterFragmentTest {
-
-    /** the Activity of the Target application  */
-    private var mActivity: MainActivity? = null
-
-    /** the [RecyclerView]'s resource id  */
-    private var resId: Int = R.id.rvCharacter
-
-    /** the [RecyclerView]  */
-    private var mRecyclerView: RecyclerView? = null
-
-    /** and it's item count  */
-    private var itemCount = 0
+    private val items = 4
 
     @get:Rule
-    var activityRule: ActivityTestRule<MainActivity> =
-        ActivityTestRule(MainActivity::class.java)
+    var activityScenarioRule: ActivityScenarioRule<MainActivity> =
+        ActivityScenarioRule(
+            MainActivity::class.java
+        )
 
     @Before
-    fun init() {
-        activityRule.activity
-            .supportFragmentManager.beginTransaction()
+    fun registerIdlingResource() {
+        IdlingRegistry.getInstance().register(ExpressoIdlingResource.countingIdlingResource)
     }
 
-    @Before
-    fun setUpTest() {
-        /* obtaining the Activity from the ActivityTestRule */
-        this.mActivity = this.activityRule.activity
-
-        /* obtaining handles to the Ui of the Activity */
-        this.mRecyclerView =
-            this.mActivity!!.findViewById(this.resId)
-        this.itemCount = this.mRecyclerView!!.adapter!!.itemCount
+    @After
+    fun unregisterIdlingResource() {
+        IdlingRegistry.getInstance().unregister(ExpressoIdlingResource.countingIdlingResource)
     }
 
     @Test
-    fun recyclerViewTestExecution() {
-
-        SystemClock.sleep(5000)
-
-        if (this.mRecyclerView!!.adapter!!.itemCount > 0) {
-            for (i in 0 until this.mRecyclerView!!.adapter!!.itemCount) {
-
-                /* clicking the item */
-                onView(withId(resId))
-                    .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(i, click()))
-
-                /* checking for the text of the first one item */if (i == 0) {
-                    onView(
-                        RecyclerViewMatcher(resId)
-                            .atPositionOnView(i, R.id.tvCharacter)
-                    )
-                        .check(matches(withText(".GIFfany")))
-                }
-            }
-        }
+    fun test_visibility_recyclerview() {
+        onView(withId(R.id.rvCharacter)).check(matches(isDisplayed()))
     }
 
-    class RecyclerViewMatcher(private val recyclerViewId: Int) {
+    @Test
+    fun test_recyclerview_scroll_to_position() {
+        onView(withId(R.id.rvCharacter))
+            .perform(
+                scrollToPosition<CharacterAdapter.CharacterViewHolder>(
+                    items
+                )
+            )
+    }
 
-        fun atPosition(position: Int): TypeSafeMatcher<View?> {
-            return atPositionOnView(position, -1)
+    @Test
+    fun test_isSelectItem_isDetailFragmentVisible() {
+        onView(withId(R.id.rvCharacter))
+            .perform(
+                scrollToPosition<CharacterAdapter.CharacterViewHolder>(
+                    items
+                )
+            )
+        onView(withId(R.id.rvCharacter))
+            .perform(
+                actionOnItemAtPosition<CharacterAdapter.CharacterViewHolder>(
+                    items,
+                    click()
+                )
+            )
+        onView(withId(R.id.tvCharacter))
+            .check(matches(withText("9-Eye")))
+    }
+
+    @Test(expected = PerformException::class)
+    fun itemWithText_Exist() {
+        onView(withId(R.id.rvCharacter))
+            .perform(
+                RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(
+                    hasDescendant(withText("9-Eye"))
+                )
+            )
+    }
+
+    @Test(expected = PerformException::class)
+    fun itemWithText_doesNotExist() {
+        onView(withId(R.id.rvCharacter))
+            .perform(
+                RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(
+                    hasDescendant(withText("not in the list"))
+                )
+            )
+    }
+
+    @Test
+    fun testRecyclerviewScrollToBottom() {
+        onView(withId(R.id.rvCharacter)).perform(ScrollToBottomAction())
+    }
+
+
+    class ScrollToBottomAction : ViewAction {
+        override fun getDescription(): String {
+            return "scroll RecyclerView to bottom"
         }
 
-        fun atPositionOnView(position: Int, targetViewId: Int): TypeSafeMatcher<View?> {
-            return object : TypeSafeMatcher<View?>() {
-                var resources: Resources? = null
-                var childView: View? = null
-                override fun describeTo(description: Description) {
-                    var idDescription = recyclerViewId.toString()
-                    if (resources != null) {
-                        idDescription = try {
-                            resources!!.getResourceName(recyclerViewId)
-                        } catch (var4: Resources.NotFoundException) {
-                            String.format(
-                                "%s (resource name not found)",
-                                *arrayOf<Any>(Integer.valueOf(recyclerViewId))
-                            )
-                        }
-                    }
-                    description.appendText("with id: $idDescription")
-                }
+        override fun getConstraints(): Matcher<View> {
+            return allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
+        }
 
-                 override fun matchesSafely(view: View?): Boolean {
-                    resources = view!!.resources
-                    if (childView == null) {
-                        val recyclerView = view.rootView.findViewById(
-                            recyclerViewId
-                        ) as RecyclerView
-                        childView = if (recyclerView.id == recyclerViewId) {
-                            recyclerView.findViewHolderForAdapterPosition(position)!!.itemView
-                        } else {
-                            return false
-                        }
-                    }
-                    return if (targetViewId == -1) {
-                        view === childView
-                    } else {
-                        val targetView: View = childView!!.findViewById(targetViewId)
-                        view === targetView
-                    }
-                }
-            }
+        override fun perform(uiController: UiController?, view: View?) {
+            val recyclerView = view as RecyclerView
+            val itemCount = recyclerView.adapter?.itemCount
+            val position = itemCount?.minus(1) ?: 0
+            recyclerView.scrollToPosition(position)
+            uiController?.loopMainThreadUntilIdle()
         }
     }
 }

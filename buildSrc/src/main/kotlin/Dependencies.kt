@@ -70,6 +70,7 @@ object Version {
     //hilt
     const val hiltVersion = "2.37"
     const val hiltViewmodels = "1.0.0-alpha02"
+    const val hiltTest = "2.28-alpha"
 
     //room
     const val room = "2.2.5"
@@ -146,6 +147,7 @@ object UnitTest {
     const val daggerMock =
         "com.github.fabioCollini.daggermock:daggermock-kotlin:${Version.daggerMockVersion}"
     const val kotlinTest = "io.kotlintest:kotlintest-runner-junit5:${Version.kotlinTestVersion}"
+    const val hiltTest = "com.google.dagger:hilt-android-compiler:${Version.hiltTest}"
 }
 
 object UiTestCase {

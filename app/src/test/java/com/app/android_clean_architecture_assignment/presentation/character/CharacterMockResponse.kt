@@ -1,5 +1,6 @@
 package com.app.android_clean_architecture_assignment.presentation.character
 
+import com.app.android_clean_architecture_assignment.data.mapper.CharacterDisplayMapper
 import com.app.android_clean_architecture_assignment.data.remote.entity.CharacterApiResponse
 import com.app.android_clean_architecture_assignment.domain.model.CharacterModel
 import com.google.gson.Gson
@@ -35,7 +36,10 @@ const val CHARACTER_JSON = " {\n" +
 
 val gson = Gson()
 
-var characterList: ArrayList<CharacterModel> = ArrayList()
-
 fun characterResponse(): CharacterApiResponse =
-    gson.fromJson<CharacterApiResponse>(CHARACTER_JSON, CharacterApiResponse::class.java)
+    gson.fromJson(CHARACTER_JSON, CharacterApiResponse::class.java)
+
+fun chratcerDomainResponse(): MutableList<CharacterModel> =
+    CharacterDisplayMapper().toCharacterDataDomainList(
+        characterResponse().data
+    ).toMutableList()

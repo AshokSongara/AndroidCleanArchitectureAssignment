@@ -1,32 +1,26 @@
 package com.app.android_clean_architecture_assignment.presentation.character
 
-import androidx.lifecycle.viewModelScope
 import com.app.android_clean_architecture_assignment.common.setError
 import com.app.android_clean_architecture_assignment.common.setLoading
 import com.app.android_clean_architecture_assignment.common.setSuccess
 import com.app.android_clean_architecture_assignment.domain.character.usecase.CharacterUseCase
-import com.app.android_clean_architecture_assignment.domain.character.usecase.FetchLocalDataUseCase
 import com.app.android_clean_architecture_assignment.domain.model.CharacterModel
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.base.BaseViewModel
 import com.app.android_clean_architecture_assignment.presentation.common.base.SingleLiveEvent
-import com.app.android_clean_architecture_assignment.presentation.mapper.CharacterDisplayMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
     private var characterUseCase: CharacterUseCase,
-    private var fetchLocalUseCase: FetchLocalDataUseCase,
 ) : BaseViewModel() {
 
-    private val _characterLiveEvent = SingleLiveEvent<Resource<ArrayList<CharacterModel>>>()
-    val characterLiveEvent: SingleLiveEvent<Resource<ArrayList<CharacterModel>>> =
+    private val _characterLiveEvent = SingleLiveEvent<Resource<MutableList<CharacterModel>>>()
+    val characterLiveEvent: SingleLiveEvent<Resource<MutableList<CharacterModel>>> =
         _characterLiveEvent
 
-    var dataList = ArrayList<CharacterModel>()
+    private lateinit var dataList: MutableList<CharacterModel>
 
     override fun loadPage(multipleTimes: Boolean): Boolean {
         fetchCharacters()
@@ -37,42 +31,22 @@ class CharacterViewModel @Inject constructor(
         _characterLiveEvent.setLoading()
         characterUseCase.execute()
             .subscribe({
-                it.data.map { character ->
-                    dataList.add(CharacterDisplayMapper().transformCharacterDisplay(character))
-                }
-                _characterLiveEvent.setSuccess(dataList)
+                dataList = it
+                _characterLiveEvent.setSuccess(it)
             }, {
                 _characterLiveEvent.setError(it)
             }).collect()
     }
 
-    fun searchFilter(text: String) {
-        val filteredList: ArrayList<CharacterModel> = ArrayList()
-        for (item in dataList) {
-            if (item.name?.lowercase()?.contains(text.lowercase()) == true) {
-                filteredList.add(item)
-            }
-        }
+    fun searchCharacters(text: String) {
+        val filteredList: MutableList<CharacterModel> = dataList.filter {
+            it.name?.lowercase()?.contains(text.lowercase().trim()) == true
+        } as MutableList<CharacterModel>
+
         if (filteredList.isEmpty()) {
             _characterLiveEvent.setError(Throwable("No Data Found.."))
         } else {
             _characterLiveEvent.setSuccess(filteredList)
-        }
-    }
-
-    //fetch all data from local database if required
-    fun getCharactersFromDB() {
-        viewModelScope.launch {
-            fetchLocalUseCase.invoke(
-                scope = viewModelScope,
-                params = Unit
-            ) { result ->
-                result.result({
-                    Timber.i("Total Size${it.size}")
-                }, {
-                    Timber.e("Error")
-                })
-            }
         }
     }
 

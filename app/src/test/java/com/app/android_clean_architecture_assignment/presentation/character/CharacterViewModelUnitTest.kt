@@ -2,10 +2,7 @@ package com.app.android_clean_architecture_assignment.presentation.character
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.app.android_clean_architecture_assignment.data.remote.entity.CharacterApiResponse
-import com.app.android_clean_architecture_assignment.data.remote.entity.transformCharacterDisplayList
 import com.app.android_clean_architecture_assignment.domain.character.usecase.CharacterUseCase
-import com.app.android_clean_architecture_assignment.domain.character.usecase.FetchLocalDataUseCase
 import com.app.android_clean_architecture_assignment.domain.model.CharacterModel
 import com.app.android_clean_architecture_assignment.presentation.common.Resource
 import com.app.android_clean_architecture_assignment.presentation.common.RxImmediateSchedulerRule
@@ -27,17 +24,19 @@ import org.mockito.Captor
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnit
+import org.mockito.junit.MockitoRule
 
 class CharacterViewModelUnitTest {
     //output value
-    private val successCharacterResponse: Resource<ArrayList<CharacterModel>> =
-        Resource(Status.SUCCESS, characterResponse().data.transformCharacterDisplayList())
+    private val successResponse: Resource<MutableList<CharacterModel>> =
+        Resource(Status.SUCCESS, chratcerDomainResponse())
     private val errorCharacterResponse: Resource<Throwable> =
         Resource(Status.ERROR, throwable = Exception())
-    private val loadingCharacterResponse: Resource<ArrayList<CharacterModel>> = Resource(Status.LOADING)
+    private val loadingCharacterResponse: Resource<MutableList<CharacterModel>> =
+        Resource(Status.LOADING)
 
     @get:Rule
-    val mockitoRule = MockitoJUnit.rule()
+    val mockitoRule: MockitoRule? = MockitoJUnit.rule()
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -48,12 +47,11 @@ class CharacterViewModelUnitTest {
 
     //mock dependencies
     private val characterUseCase = mock<CharacterUseCase>()
-    private val fetchUseCase = mock<FetchLocalDataUseCase>()
-    private val characterViewModel by lazy { CharacterViewModel(characterUseCase,fetchUseCase) }
-    private var characterObserver = mock<Observer<Resource<ArrayList<CharacterModel>>>>()
+    private val characterViewModel by lazy { CharacterViewModel(characterUseCase) }
+    private var characterObserver = mock<Observer<Resource<MutableList<CharacterModel>>>>()
 
     @Captor
-    var argumentCaptor: ArgumentCaptor<Resource<ArrayList<CharacterModel>>>? = null
+    var argumentCaptor: ArgumentCaptor<Resource<MutableList<CharacterModel>>>? = null
 
     @Before
     fun setUp() {
@@ -63,7 +61,7 @@ class CharacterViewModelUnitTest {
 
     @Test
     fun fetchCharacters_success() {
-        val delayer = PublishSubject.create<Resource<ArrayList<CharacterModel>>>()
+        val delayer = PublishSubject.create<Resource<MutableList<CharacterModel>>>()
 
         stub_fetchCharacters_success(delayer)
 
@@ -83,7 +81,7 @@ class CharacterViewModelUnitTest {
             Mockito.verify(characterObserver, Mockito.times(2)).onChanged(capture())
             MatcherAssert.assertThat(
                 Gson().toJson(value),
-                CoreMatchers.`is`(Gson().toJson(successCharacterResponse))
+                CoreMatchers.`is`(Gson().toJson(successResponse))
             )
         }
     }
@@ -107,13 +105,13 @@ class CharacterViewModelUnitTest {
 
     //----------------------------stubbing-------------------------------------//
 
-    private fun stub_fetchCharacters_success(delayer: PublishSubject<Resource<ArrayList<CharacterModel>>>) {
+    private fun stub_fetchCharacters_success(delayer: PublishSubject<Resource<MutableList<CharacterModel>>>) {
         whenever(
             characterUseCase.execute()
         ).thenReturn(
-            Single.create<CharacterApiResponse> { emitter ->
+            Single.create<MutableList<CharacterModel>> { emitter ->
                 try {
-                    emitter.onSuccess(characterResponse())
+                    emitter.onSuccess(chratcerDomainResponse())
                 } catch (e: Exception) {
                     emitter.onError(e)
                 }
