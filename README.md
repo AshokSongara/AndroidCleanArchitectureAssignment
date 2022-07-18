@@ -21,7 +21,7 @@ The Project is implemented by following Clean Architecture.
 
 - UI tests using Expresso Framework
 - Instrumentation test for local database
-- Testing ViewModels, repositories using MOCKK Library.
+- Testing ViewModels, repositories using Mockito Library.
 
 # Analytics and Logging
 
