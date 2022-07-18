@@ -5,6 +5,7 @@ import com.app.android_clean_architecture_assignment.data.remote.entity.Characte
 import com.app.android_clean_architecture_assignment.domain.model.CharacterModel
 import io.reactivex.Single
 
+@Suppress("UNCHECKED_CAST")
 class CharacterDisplayMapper {
     fun toCharacterList(response: Single<CharacterApiResponse>): Single<MutableList<CharacterModel>> {
         return response.map { it1 ->
