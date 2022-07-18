@@ -74,12 +74,16 @@ class CharacterFragment : BaseViewModelFragment<CharacterViewModel>() {
         binding.progressBar.hide()
         characterAdapter.clear()
         response.throwable?.let {
-            Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                it.message ?: getString(R.string.no_data_found),
+                Toast.LENGTH_LONG
+            )
+                .show()
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        // below line is to get our inflater
         requireActivity().menuInflater.inflate(R.menu.menu_main, menu)
         val searchItem: MenuItem = menu.findItem(R.id.search)
         val searchView: SearchView = searchItem.actionView as SearchView

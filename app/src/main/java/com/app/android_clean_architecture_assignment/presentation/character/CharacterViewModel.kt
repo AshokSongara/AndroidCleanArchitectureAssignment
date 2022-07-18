@@ -1,5 +1,6 @@
 package com.app.android_clean_architecture_assignment.presentation.character
 
+import androidx.lifecycle.LiveData
 import com.app.android_clean_architecture_assignment.common.setError
 import com.app.android_clean_architecture_assignment.common.setLoading
 import com.app.android_clean_architecture_assignment.common.setSuccess
@@ -17,7 +18,7 @@ class CharacterViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _characterLiveEvent = SingleLiveEvent<Resource<MutableList<CharacterModel>>>()
-    val characterLiveEvent: SingleLiveEvent<Resource<MutableList<CharacterModel>>> =
+    val characterLiveEvent: LiveData<Resource<MutableList<CharacterModel>>> =
         _characterLiveEvent
 
     private lateinit var dataList: MutableList<CharacterModel>

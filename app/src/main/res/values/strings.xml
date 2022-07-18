@@ -4,4 +4,5 @@
     <string name="character_detail_fragment">Character detail fragment</string>
     <string name="add">Like</string>
     <string name="search_title">Search Character</string>
+    <string name="no_data_found">No Data Found..</string>
 </resources>
