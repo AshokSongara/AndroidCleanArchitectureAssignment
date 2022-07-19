@@ -27,7 +27,7 @@ class CharacterAdapter(private val onItemClicked: (character: CharacterModel) ->
 
     fun clear() {
         characterList.clear()
-        notifyDataSetChanged()
+        diffResult?.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
