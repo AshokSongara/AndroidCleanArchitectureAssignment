@@ -1,7 +1,5 @@
 package com.app.android_clean_architecture_assignment.data.remote.respository
 
-import com.app.android_clean_architecture_assignment.data.local.dao.CharacterDao
-import com.app.android_clean_architecture_assignment.data.local.model.CharacterLocal
 import com.app.android_clean_architecture_assignment.data.mapper.CharacterDisplayMapper
 import com.app.android_clean_architecture_assignment.domain.character.repository.CharacterRepository
 import com.app.android_clean_architecture_assignment.domain.model.CharacterModel
@@ -10,15 +8,9 @@ import javax.inject.Inject
 
 class CharacterRepositoryImpl @Inject constructor(
     private val characterApi: CharacterApi,
-    private val characterDao: CharacterDao
 ) : CharacterRepository {
 
     override fun getCharacterData(): Single<MutableList<CharacterModel>> {
         return CharacterDisplayMapper().toCharacterList(characterApi.getCharacters())
     }
-
-    override suspend fun saveAllLocalData(characters: CharacterLocal) {
-        characterDao.insertCharacters(characters)
-    }
-
 }

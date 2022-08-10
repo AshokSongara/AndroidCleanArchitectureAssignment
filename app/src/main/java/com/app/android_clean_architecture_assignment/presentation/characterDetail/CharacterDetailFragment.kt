@@ -1,6 +1,5 @@
 package com.app.android_clean_architecture_assignment.presentation.characterDetail
 
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
 import com.app.android_clean_architecture_assignment.R
@@ -38,10 +37,6 @@ class CharacterDetailFragment : BaseViewModelFragment<CharacterDetailsViewModel>
 
         binding.tvDescription.text = args.character.name
 
-        binding.btnAdd.setOnClickListener {
-            viewModel.insertCharacter(args.character)
-            Toast.makeText(context, "Successfully Saved Data", Toast.LENGTH_SHORT).show()
-        }
     }
 
 }

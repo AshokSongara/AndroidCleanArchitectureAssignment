@@ -21,7 +21,7 @@ class CharacterViewModel @Inject constructor(
     val characterLiveEvent: LiveData<Resource<MutableList<CharacterModel>>> =
         _characterLiveEvent
 
-    private lateinit var dataList: MutableList<CharacterModel>
+    private var dataList = mutableListOf<CharacterModel>()
 
     override fun loadPage(multipleTimes: Boolean): Boolean {
         fetchCharacters()

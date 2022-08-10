@@ -1,4 +1,4 @@
-package com.app.android_clean_architecture_assignment.presentation.app
+package com.app.android_clean_architecture_assignment
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

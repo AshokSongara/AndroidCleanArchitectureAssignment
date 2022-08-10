@@ -145,10 +145,6 @@ dependencies {
     implementation Room.room
     kapt Room.roomCompiler
 
-    // coroutines
-    implementation Coroutine.coroutineAndroid
-    implementation Coroutine.coroutineCore
-
     implementation Hilt.hilt
     kapt Hilt.hiltCompiler
 //    kaptTest UnitTest.hiltTest

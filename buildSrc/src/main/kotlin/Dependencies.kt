@@ -75,9 +75,6 @@ object Version {
     //room
     const val room = "2.2.5"
 
-    //coroutine
-    const val coroutine = "1.5.2"
-
     //firebase nom
     const val firebaseBom = " 30.1.0"
 }
@@ -168,11 +165,6 @@ object Hilt{
 object Room{
     const val room = "androidx.room:room-ktx:${Version.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Version.room}"
-}
-
-object Coroutine{
-    const val coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutine}"
-    const val coroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutine}"
 }
 
 object Firebase{

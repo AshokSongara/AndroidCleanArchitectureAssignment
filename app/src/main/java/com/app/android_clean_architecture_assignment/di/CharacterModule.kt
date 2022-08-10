@@ -1,6 +1,5 @@
 package com.app.android_clean_architecture_assignment.di
 
-import com.app.android_clean_architecture_assignment.data.local.dao.CharacterDao
 import com.app.android_clean_architecture_assignment.data.remote.respository.CharacterApi
 import com.app.android_clean_architecture_assignment.data.remote.respository.CharacterRepositoryImpl
 import com.app.android_clean_architecture_assignment.domain.character.repository.CharacterRepository
@@ -23,8 +22,8 @@ class CharacterModule {
 
     @Singleton
     @Provides
-    fun provideRepository(api: CharacterApi, characterDao: CharacterDao): CharacterRepository {
-        return CharacterRepositoryImpl(api,characterDao)
+    fun provideRepository(api: CharacterApi): CharacterRepository {
+        return CharacterRepositoryImpl(api)
     }
 
 
