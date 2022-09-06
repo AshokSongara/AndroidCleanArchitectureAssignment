@@ -26,5 +26,4 @@ class CharacterModule {
         return CharacterRepositoryImpl(api)
     }
 
-
 }
